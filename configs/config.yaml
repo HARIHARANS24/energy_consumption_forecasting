@@ -1,0 +1,13 @@
+data:
+  raw_data_path: 'data/raw/energy_consumption_dataset.csv'
+  datetime_column: 'datetime'
+  target_column: 'energy_consumption'
+  resample_freq: 'H'   # Hourly frequency resampling
+
+model:
+  lag_hours: 24
+  xgboost_params:
+    n_estimators: 100
+    max_depth: 5
+    learning_rate: 0.1
+  model_save_path: "models/xgboost_model.pkl"
