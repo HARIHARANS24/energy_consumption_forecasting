@@ -1,178 +1,249 @@
-
 # Energy Consumption Forecasting
 
 ## Project Overview
 
 This project provides an end-to-end pipeline for forecasting energy consumption using time series data. It includes data loading, preprocessing, feature engineering, model training, evaluation, and deployment with a Streamlit web app for interactive forecasting and visualization.
 
----
+## Author
+
+**Hariharan S**  
+- GitHub: [@HARIHARANS24](https://github.com/HARIHARANS24)
+- LinkedIn: [Hariharan S](https://www.linkedin.com/in/hariharan-s-24/)
+- Email: hariharans24@gmail.com
+
+## Features
+
+- **Data Processing Pipeline**
+  - Raw data ingestion and validation
+  - Automated data cleaning and preprocessing
+  - Feature engineering with lag variables and time features
+  - External data integration (weather, holidays)
+
+- **Machine Learning Models**
+  - XGBoost for traditional ML approach
+  - LSTM for deep learning approach
+  - Model comparison and selection
+  - Hyperparameter tuning
+
+- **Evaluation Metrics**
+  - RMSE (Root Mean Square Error)
+  - MAE (Mean Absolute Error)
+  - MAPE (Mean Absolute Percentage Error)
+  - Custom evaluation visualizations
+
+- **Interactive Web Application**
+  - Streamlit-based dashboard
+  - Real-time forecasting
+  - Interactive visualizations
+  - Historical data analysis
 
 ## Project Structure
 
 ```plaintext
 energy_consumption_forecasting/
 │
-├── data/
-│   ├── raw/                  # Raw source data (immutable)
-│   ├── processed/            # Cleaned and feature-engineered data
-│   ├── external/             # External data sources (weather, holidays, etc.)
-│   └── README.md             # Data description and sources info
+├── data/                           # Data directory
+│   ├── raw/                        # Raw source data (immutable)
+│   ├── processed/                  # Cleaned and feature-engineered data
+│   ├── external/                   # External data sources (weather, holidays)
+│   └── README.md                   # Data description and sources info
 │
-├── notebooks/
+├── notebooks/                      # Jupyter notebooks
 │   ├── exploratory_data_analysis.ipynb
 │   ├── feature_engineering.ipynb
 │   └── model_experiments.ipynb
 │
-├── src/
+├── src/                           # Source code
 │   ├── __init__.py
 │   ├── data/
-│   │   ├── data_loader.py            # Load raw & processed data
-│   │   ├── preprocess.py             # Cleaning & preprocessing functions
-│   │   └── feature_engineering.py    # Feature creation & selection
+│   │   ├── data_loader.py         # Load raw & processed data
+│   │   ├── preprocess.py          # Cleaning & preprocessing functions
+│   │   └── feature_engineering.py # Feature creation & selection
 │   │
 │   ├── models/
-│   │   ├── base_model.py             # Abstract base class for models
-│   │   ├── lstm_model.py             # LSTM deep learning model
-│   │   ├── xgboost_model.py          # XGBoost model
-│   │   └── model_utils.py            # Training, evaluation, saving models
+│   │   ├── base_model.py          # Abstract base class for models
+│   │   ├── lstm_model.py          # LSTM deep learning model
+│   │   ├── xgboost_model.py       # XGBoost model
+│   │   └── model_utils.py         # Training, evaluation, saving models
 │   │
 │   ├── evaluation/
-│   │   └── metrics.py                # Custom metrics (RMSE, MAE, MAPE, etc.)
+│   │   └── metrics.py             # Custom metrics (RMSE, MAE, MAPE)
 │   │
 │   ├── utils/
-│   │   ├── config.py                 # Configuration loader (YAML/JSON)
-│   │   ├── logger.py                 # Logging setup
-│   │   └── helpers.py                # Utility functions
+│   │   ├── config.py              # Configuration loader (YAML/JSON)
+│   │   ├── logger.py              # Logging setup
+│   │   └── helpers.py             # Utility functions
 │   │
 │   ├── visualization/
-│   │   └── viz.py                   # Visualization utilities for reports & EDA
+│   │   └── viz.py                 # Visualization utilities
 │   │
-│   └── forecasting_pipeline.py      # Main pipeline orchestration
+│   └── forecasting_pipeline.py    # Main pipeline orchestration
 │
-├── tests/
+├── tests/                         # Unit tests
 │   ├── test_data_loader.py
 │   ├── test_preprocess.py
 │   ├── test_feature_engineering.py
 │   ├── test_models.py
 │   └── test_forecasting_pipeline.py
 │
-├── configs/
-│   ├── config.yaml                  # All hyperparameters, paths, settings
-│   └── logging.yaml                 # Logging configuration
+├── configs/                       # Configuration files
+│   ├── config.yaml                # All hyperparameters, paths, settings
+│   └── logging.yaml               # Logging configuration
 │
-├── scripts/
-│   ├── run_train.sh                 # Bash script to train model
-│   ├── run_inference.sh             # Bash script for inference
-│   └── setup_env.sh                 # Setup environment (install deps, etc.)
+├── scripts/                       # Utility scripts
+│   ├── run_train.sh              # Bash script to train model
+│   ├── run_inference.sh          # Bash script for inference
+│   └── setup_env.sh              # Setup environment
 │
-├── requirements.txt                 # Python dependencies
-├── Dockerfile                      # Containerization for deployment
-├── docker-compose.yml              # Multi-container setup (optional)
-├── README.md
-├── app.py
-├── main.py
-├── LICENSE
-└── .gitignore
+├── models/                        # Saved model artifacts
+│   ├── lstm/                     # LSTM model checkpoints
+│   └── xgboost/                  # XGBoost model files
+│
+├── requirements.txt              # Python dependencies
+├── Dockerfile                    # Containerization for deployment
+├── docker-compose.yml           # Multi-container setup
+├── app.py                       # Streamlit web application
+├── main.py                      # Main entry point
+├── generate_synthetic_data_full.py # Data generation script
+├── LICENSE                      # MIT License
+└── .gitignore                   # Git ignore file
 ```
-
----
 
 ## Setup Instructions
 
-1. Clone the repository:
+1. **Clone the Repository**
    ```bash
    git clone https://github.com/HARIHARANS24/energy_consumption_forecasting.git
    cd energy_consumption_forecasting
    ```
 
-2. Set up Python virtual environment and install dependencies:
+2. **Set Up Python Environment**
    ```bash
+   # Create virtual environment
    python3 -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   
+   # Activate virtual environment
+   # On Windows:
+   venv\Scripts\activate
+   # On Unix/MacOS:
+   source venv/bin/activate
+   
+   # Install dependencies
    pip install -r requirements.txt
    ```
 
-3. Run Jupyter notebooks in `notebooks/` for data exploration and feature engineering.
-
-4. Train models via scripts or notebook:
+3. **Generate Synthetic Data (Optional)**
    ```bash
-   bash scripts/run_train.sh
+   python generate_synthetic_data_full.py
    ```
 
-5. Launch the Streamlit app for forecasting and visualization:
+4. **Run Tests**
+   ```bash
+   pytest tests/
+   ```
+
+5. **Train Models**
+   ```bash
+   # Using script
+   bash scripts/run_train.sh
+   
+   # Or using Python directly
+   python main.py --mode train
+   ```
+
+6. **Launch Web Application**
    ```bash
    streamlit run app.py
    ```
 
----
-
 ## Usage
 
-- **Data**: Place raw time series CSV files under `data/raw/`.
-- **Model**: Trained models saved in `src/models/`.
-- **Forecasting**: Use the Streamlit app for interactive energy consumption predictions.
-- **Visualization**: Explore historical consumption trends with interactive charts.
-- **Testing**: Unit tests available under `tests/` for pipeline components.
+### Data Management
+- Place raw time series CSV files in `data/raw/`
+- Processed data will be stored in `data/processed/`
+- External data (weather, holidays) should be placed in `data/external/`
 
----
+### Model Training
+- Configure model parameters in `configs/config.yaml`
+- Run training scripts from `scripts/` directory
+- Trained models are saved in `models/` directory
 
-## Features
-
-- Data preprocessing and feature engineering with lag variables and time features.
-- Model training with XGBoost and deep learning models (LSTM).
-- Custom evaluation metrics for regression accuracy (RMSE, MAE, MAPE).
-- Streamlit app with user input controls and live predictions.
-- Interactive time series visualizations of historical energy consumption.
-- Insights based on temperature, time of day, and recent consumption trends.
-
----
-
-## Modeling Approach
-
-- **XGBoost Model:** Gradient boosting trees trained on lagged features, temperature, and time.
-- **LSTM Model:** Recurrent neural network capturing temporal dependencies.
-
-Feature engineering includes lag features, rolling statistics, time-based encoding, and external factors like temperature.
-
-Model selection and hyperparameter tuning are documented and performed through experiments logged in Jupyter notebooks.
-
----
-
-## Testing
-
-Run tests using:
-
-```bash
-pytest tests/
-```
-Tests cover data loading, preprocessing, feature engineering, model training, and pipeline orchestration.
-
----
+### Web Application
+- Access the Streamlit app at `http://localhost:8501`
+- Upload new data or use existing datasets
+- View forecasts and visualizations
+- Download predictions and reports
 
 ## Configuration
 
-All parameters are configurable via `configs/config.yaml`.
+### Model Parameters
+Edit `configs/config.yaml` to modify:
+- Model hyperparameters
+- Feature engineering settings
+- Training parameters
+- Data paths
+- Evaluation metrics
 
-Logging is controlled by `configs/logging.yaml`.
+### Logging
+Configure logging in `configs/logging.yaml`:
+- Log levels
+- Output formats
+- File paths
 
-Easily modify model hyperparameters, data paths, feature settings, and more through these configuration files.
+## Development
 
----
+### Adding New Features
+1. Create feature branch
+2. Add tests in `tests/`
+3. Implement feature
+4. Run tests
+5. Submit pull request
+
+### Running Tests
+```bash
+# Run all tests
+pytest tests/
+
+# Run specific test file
+pytest tests/test_models.py
+
+# Run with coverage
+pytest --cov=src tests/
+```
 
 ## Deployment
 
-- A `Dockerfile` is provided for containerizing the application.
-- Use `docker-compose.yml` to run multi-container setups if needed (e.g., separate API and database).
-- The project can be deployed on cloud providers or local servers with ease.
+### Docker Deployment
+1. Build Docker image:
+   ```bash
+   docker build -t energy-forecast .
+   ```
 
----
+2. Run container:
+   ```bash
+   docker run -p 8501:8501 energy-forecast
+   ```
 
-## Contribution
+### Docker Compose
+For multi-container setup:
+```bash
+docker-compose up -d
+```
 
-Contributions welcome! Please:
-- Fork the repo
-- Create a feature branch
-- Submit pull requests with clear descriptions
-- Ensure tests pass and code is documented
+## Contributing
 
----
+1. Fork the repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Create pull request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thanks to all contributors
+- Inspired by various time series forecasting projects
+- Built with Streamlit, PyTorch, and XGBoost
