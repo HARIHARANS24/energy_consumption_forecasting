@@ -9,7 +9,7 @@ This project provides an end-to-end pipeline for forecasting energy consumption 
 **Hariharan S**  
 - GitHub: [@HARIHARANS24](https://github.com/HARIHARANS24)
 - LinkedIn: [Hariharan S](https://www.linkedin.com/in/hariharan-s-24/)
-- Email: hariharans24@gmail.com
+- Email: hariharans24@gmail.com 
 
 ## ✨ Features
 
@@ -247,3 +247,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Thanks to all contributors
 - Inspired by various time series forecasting projects
 - Built with Streamlit, PyTorch, and XGBoost
+
