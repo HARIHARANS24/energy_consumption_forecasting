@@ -14,7 +14,7 @@ This project provides an end-to-end pipeline for forecasting energy consumption 
 ## ✨ Features  
  
 - **🔄 Data Processing Pipeline**  
-  - Raw data ingestion and validation
+  - Raw data ingestion and validation 
   - Automated data cleaning and preprocessing
   - Feature engineering with lag variables and time features
   - External data integration (weather, holidays)
@@ -247,6 +247,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Thanks to all contributors
 - Inspired by various time series forecasting projects
 - Built with Streamlit, PyTorch, and XGBoost
+
 
 
 
